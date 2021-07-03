@@ -1,0 +1,44 @@
+.blah {
+    margin:auto; 
+
+    font-size:35px;
+    color: rgba(14, 13, 13, 0.767);
+    width:315px;
+    border: 1px solid red;
+    
+}
+.buttons {
+    
+    margin:auto; 
+    width:300px;
+    border: 1px solid red;
+    padding: 20px 150px
+}
+.progress {
+    margin:auto; 
+    width:300px;
+    border: 1px solid red;
+    padding: 20px 150px
+}
+
+
+
+.container{
+    background-color: rgb(192, 192, 192);
+    width: 100%;
+    border-radius: 3px;
+    
+        
+}
+
+.bar{
+    background-color: #ff00009f;
+    color: white;
+    height: 30px;
+    border-radius: 3px;
+    
+        
+}
+
+
+
