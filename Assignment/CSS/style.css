@@ -1,0 +1,38 @@
+.bag {
+    margin:auto; 
+    width:200px;
+    border: 0px solid red;
+}
+.buttons {
+    
+    margin:auto; 
+    width:300px;
+    border: 0px solid red;
+    padding: 20px 150px
+}
+.progress {
+    margin:auto; 
+    width:300px;
+    border: 0px solid red;
+    padding: 20px 150px
+}
+
+
+
+.container{
+    background-color: rgb(192, 192, 192);
+    width: 100%;
+    border-radius: 3px;
+    
+        
+}
+
+.bar{
+    background-color: #ff00009f;
+    color: white;
+    height: 30px;
+    border-radius: 3px;
+    
+        
+}
+
