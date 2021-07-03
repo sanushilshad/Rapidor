@@ -30,38 +30,22 @@
     border-radius: 5px;
 
 }
-.buttons {
-    
-    margin:auto; 
-    width:300px;
-    border: 1px solid red;
-    padding: 20px 150px
-}
-.progress {
-    margin:auto; 
-    width:300px;
-    border: 1px solid red;
-    padding: 20px 150px
-}
-
-
-
 .container{
-    background-color: rgb(192, 192, 192);
-    width: 100%;
-    border-radius: 3px;
-    
-        
-}
+     width:100%; 
+    }    
 
-.bar{
-    background-color: #ff00009f;
-    color: white;
-    height: 30px;
-    border-radius: 3px;
-    
-        
-}
+.align-left{
+     float: left;width:100%;
+     border: 1px solid rgba(158, 151, 151, 0.623); 
+    }
 
-
+.align-right{
+     float: right;
+     width:10%; 
+     margin-top: -3%;
+     margin-right: 5%;
+     border: 1px solid rgba(158, 151, 151, 0.623);
+     
+     
+    }
 

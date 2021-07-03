@@ -5,6 +5,7 @@ const discount=$('#Discount');
 const gross=$('#Gross_Amount');
 const discount_amount=$('#Discount_Amount');
 const net_total=$('#total_bill');
+const label=$('#label-1');
 
 let price_num=0;
 let quantit_num=1;
@@ -20,7 +21,6 @@ let er;
 price.on('input',function(){
    
    price_num=parseInt(price.val());
-   console.log(price_num)
     quantit_num=quantity.val();
     er=price_num*quantit_num;
     gross.attr('placeholder',er);
@@ -50,7 +50,9 @@ quantity.on('input',function(){
 
 discount.on('input',function(){
 
-   dd=discount.val()
+   dd=discount.val();
+   label.text(dd+'%');
+
    k=(price_num*quantit_num)*dd/100;
    discount_amount.attr('placeholder', k);
    net_total.attr('placeholder', er-k);
