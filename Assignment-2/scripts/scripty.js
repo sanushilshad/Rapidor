@@ -33,7 +33,7 @@ let calculation= function(){
     label.text(discount_var+'%');
 
     if (B2C.is(":checked")){
-        cess=gross_amount_var*(1/100);
+        cess=(gross_amount_var-discount_amount_var)*(1/100);
         cess_amount.attr('placeholder',cess);
     }
     else{
