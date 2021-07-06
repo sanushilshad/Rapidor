@@ -53,12 +53,16 @@ def update(request):
     name_1=json_body['name']
     mobile_1=json_body['mobile']
     #Customer.objects.filter(id=1).update(name=name_1,mobile=mobile_1)
-    
-    customer=Customer.objects.get(id=id_1)
-    customer.name=name_1
-    customer.mobile=mobile_1
-    customer.save()
-    return JsonResponse('Successfully updated' ,safe=False)
+    exist=Customer.objects.filter(id=id_1).exists()
+    print(exist)
+    if (exist):
+        customer=Customer.objects.get(id=id_1)
+        customer.name=name_1
+        customer.mobile=mobile_1
+        customer.save()
+        return JsonResponse('Successfully updated' ,safe=False)
+    else:
+        return JsonResponse({"message": "Invalid Customer ID"})
 
 @csrf_exempt
 def delete(request):
@@ -66,9 +70,18 @@ def delete(request):
     print(body)
     json_body=json.loads(body)
     id_1=json_body['id']
-    customer=Customer.objects.get(id=id_1)
-    customer.delete()
-    return JsonResponse('Successfully deleted' ,safe=False)
+
+    exist=Customer.objects.filter(id=id_1).exists()
+    print(exist)
+
+    if (exist):
+        customer=Customer.objects.get(id=id_1)
+        customer.delete()
+        return JsonResponse('Successfully deleted' ,safe=False)
+    else:
+        return JsonResponse({"message": "Invalid Customer ID"})
+    
+    
     
 
 
