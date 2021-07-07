@@ -178,11 +178,15 @@ $('#submit-1').on('click',function(){
 
 
 $('.delete').on('click', function(){
-  console.log("deleted")
+  confirm_1=confirm('Confirm Deletion');
+  if (confirm_1==true)
+  {console.log("deleted")
   var $this = $(this);
   var cust_id = $this.attr('data-id');
   console.log(cust_id)
   delete_cust(cust_id)
+  }
+  
 
 });
  
@@ -218,12 +222,13 @@ $('.delete').on('click', function(){
     
   });
 
+  $('#submit-2').on('click',function(){
+  confirm_2=confirm("Confirm Updation");
+  if (confirm_2==true){
+    update_cust(cust_id)}
+   })
 
   
-   $('#submit-2').on('click',function(){
-
-    update_cust(cust_id)
-   })
 
 });
 
