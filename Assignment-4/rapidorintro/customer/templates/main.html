@@ -30,44 +30,83 @@
       <h3>Customers<h3>
     </div>
     <div class="align-right">
-      <button type="button" id="btn" style='padding: 10px 20px;border: 1px solid rgba(0, 0, 0, 0.623); 'class="btn btn-outline-success"><b>Add</b></button>
+      <button type="button" id="btn" style='padding: 10px 20px;border: 1px solid rgba(0, 0, 0, 0.623);' class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter"><b>Add</b></button>
     </div>
+    
 </div> 
 
 
 
-{% comment %} <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
+
+
+<!-- Button trigger modal -->
+
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h3 class="modal-title" id="exampleModalLongTitle">Customer</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <p>Name: </p>
+        
+
+                    
+                        <input type="text" id="name" class="form-control" placeholder="Name" aria-describedby="basic-addon1">      
+        <br>           
+      <p>Mobile:</p>
+ 
+    
+                        <input type="number" id="mobile" class="form-control" placeholder="Mobile" aria-describedby="basic-addon1">
+                  
+          <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" id="submit-1" class="btn btn-primary">Create</button>
       </div>
     </div>
   </div>
 </div>
- {% endcomment %}
 
 
 
 
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">Customer</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Name: </p>
+        
 
-
+                    
+                        <input type="text" id="name-2" class="form-control"  aria-describedby="basic-addon1">      
+        <br>           
+      <p>Mobile:</p>
+ 
+    
+                        <input type="number" id="mobile-2" class="form-control"  value=10 aria-describedby="basic-addon1">
+                  
+          <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="submit-2" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -97,7 +136,7 @@
     <div class="col">
 
     <button type="button" data-id='{{article.id}}' class="btn btn-success update"><i style='font-size:36px;' class='fas fa-edit'></i></button>
-    <button type="button" data-id='{{article.id}}' class="btn btn-danger delete"><i class="material-icons" style="font-size:36px;color:white">delete</i></button>
+    <button type="button" data-id='{{article.id}}' class="btn btn-danger delete" ><i class="material-icons" style="font-size:36px;color:white">delete</i></button>
     </div> 
 
 
@@ -133,16 +172,13 @@ $('#submit-1').on('click',function(){
   });
   })
 
-  $('.update').on('click', function(){
-  console.log("edited")
-  var $this = $(this);
-  var cust_id = $this.attr('data-id');
-  console.log(cust_id)
 
-});
+
+
+
 
 $('.delete').on('click', function(){
-  console.log("edited")
+  console.log("deleted")
   var $this = $(this);
   var cust_id = $this.attr('data-id');
   console.log(cust_id)
@@ -163,19 +199,54 @@ $('.delete').on('click', function(){
    
  }  
 
-  function update_cust(cust_id){
-      axios.post('http://127.0.0.1:8000/customer/delete',{
+
+
+
+
+
+ $('.update').on('click', function(){
+  console.log("updated")
+   $('.update').attr("data-toggle","modal");
+  $('.update').attr("data-target","#exampleModalCenter2");
+  var $this = $(this);
+  var cust_id = $this.attr('data-id');
+  axios.post('http://127.0.0.1:8000/customer/fetch_single',{
         'id':cust_id
+      }).then(function (response) {
+     $('#name-2').attr("value",response.data.name);
+     $('#mobile-2').attr("value",response.data.mobile);
+    
+  });
+
+
+  
+   $('#submit-2').on('click',function(){
+
+    update_cust(cust_id)
+   })
+
+});
+
+
+function update_cust(cust_id){
+
+      axios.post('http://127.0.0.1:8000/customer/update',{
+        id:cust_id,
+        name:  $('#name-2').val(),
+        mobile:  $('#mobile-2').val(),
       })
   .then(function (response) {
     console.log(response)
     location.reload()
   });
-  
-    
-   
- }  
-  
+ }   
+
+
+
+ 
+
+
+
 
 
 
