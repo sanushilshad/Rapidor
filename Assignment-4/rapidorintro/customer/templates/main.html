@@ -207,34 +207,41 @@ $('.delete').on('click', function(){
 
 
 
-
+let cust_id_1;
  $('.update').on('click', function(){
   console.log("updated")
    $('.update').attr("data-toggle","modal");
   $('.update').attr("data-target","#exampleModalCenter2");
+  
+
   var $this = $(this);
-  var cust_id = $this.attr('data-id');
+  cust_id_1 = $this.attr('data-id');
   axios.post('http://127.0.0.1:8000/customer/fetch_single',{
-        'id':cust_id
+        'id':cust_id_1
       }).then(function (response) {
      $('#name-2').attr("value",response.data.name);
      $('#mobile-2').attr("value",response.data.mobile);
-    
+
   });
 
-  $('#submit-2').on('click',function(){
-  confirm_2=confirm("Confirm Updation");
-  if (confirm_2==true){
-    update_cust(cust_id)}
-   })
-
   
+
 
 });
 
 
-function update_cust(cust_id){
 
+$('#submit-2').on('click',function(){
+  confirm_2=confirm("Confirm Updation");
+   
+  if (confirm_2==true){
+  update_cust(cust_id_1)}
+  })
+ 
+
+function update_cust(cust_id){
+ 
+  
       axios.post('http://127.0.0.1:8000/customer/update',{
         id:cust_id,
         name:  $('#name-2').val(),
@@ -242,7 +249,7 @@ function update_cust(cust_id){
       })
   .then(function (response) {
     console.log(response)
-    location.reload()
+    location.reload() 
   });
  }   
 
