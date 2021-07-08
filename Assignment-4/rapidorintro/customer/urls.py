@@ -11,7 +11,7 @@ urlpatterns = [
     path('update',views.update),
     path('delete',views.delete),
     # path('main',views.create_cust),
-    path('a/',views.blah)
+    path('',views.mains)
 
     
 ]

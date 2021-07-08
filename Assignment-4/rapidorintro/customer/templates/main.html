@@ -10,6 +10,7 @@
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href={% static 'style.css'%} rel="stylesheet">
     
     <title>Polls</title>
   
@@ -53,17 +54,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Name: </p>
-        
-
-                    
-                        <input type="text" id="name" class="form-control" placeholder="Name" aria-describedby="basic-addon1">      
+        <p>Name: </p>            
+        <input type="text" id="name" class="form-control" placeholder="Name" aria-describedby="basic-addon1">      
         <br>           
-      <p>Mobile:</p>
- 
-    
-                        <input type="number" id="mobile" class="form-control" placeholder="Mobile" aria-describedby="basic-addon1">
-                  
+        <p>Mobile:</p>
+        <input type="number" id="mobile" class="form-control" placeholder="Mobile" aria-describedby="basic-addon1">        
           <br>
       </div>
       <div class="modal-footer">
@@ -88,17 +83,11 @@
       </div>
       <div class="modal-body">
         <p>Name: </p>
-        
-
-                    
-                        <input type="text" id="name-2" class="form-control"  aria-describedby="basic-addon1">      
+        <input type="text" id="name-2" class="form-control"  aria-describedby="basic-addon1">      
         <br>           
-      <p>Mobile:</p>
- 
-    
-                        <input type="number" id="mobile-2" class="form-control"  value=10 aria-describedby="basic-addon1">
-                  
-          <br>
+        <p>Mobile:</p>
+        <input type="number" id="mobile-2" class="form-control"  value=10 aria-describedby="basic-addon1">
+        <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -108,19 +97,13 @@
   </div>
 </div>
 
-
-
-
-
-
-
 <br> 
 <div class="document_2">
 <div class="row">
-  <div style="padding-left:29px" class="col"><h4>#<h4></div>
-  <div class="col"><h4>Name<h4></div>
-  <div class="col"><h4>Mobile<h4></div>
-  <div class="col"><h4>Action<h4></div>
+  <div style="padding-left:29px" class="col"><h3><b>#</b></h3></div>
+  <div class="col"><h3><b>Name</b></h3></div>
+  <div class="col"><h3><b>Mobile</b></h3></div>
+  <div class="col"><h3><b>Action</b></h3></div>
 </div>
 <div>
 
@@ -128,140 +111,33 @@
 <hr style='border-top: 4px solid black;'>
 
 <div class="document_3">
-{% for article in articles %}
+{% for customer in customers %}
   <div class="row">
-    <div style="padding-left:29px" class="col">{{article.id}}</div>
-    <div class="col">{{article.name}}</div>
-    <div class="col">{{article.mobile}}</div>
+    <div style="padding-left:29px" class="col"><h4 style='font-size:20px'>{{customer.id}}</h4></div>
+    <div class="col"><h4 style='font-size:20px'>{{customer.name}}</h4></div>
+    <div class="col"><h4 style='font-size:20px'>{{customer.mobile}}</h4></div>
     <div class="col">
 
-    <button type="button" data-id='{{article.id}}' class="btn btn-success update"><i style='font-size:36px;' class='fas fa-edit'></i></button>
-    <button type="button" data-id='{{article.id}}' class="btn btn-danger delete" ><i class="material-icons" style="font-size:36px;color:white">delete</i></button>
+    <button type="button" data-id='{{customer.id}}' class="btn btn-success update"><i style='font-size:36px;' class='fas fa-edit'></i></button>
+    <button type="button" data-id='{{customer.id}}' class="btn btn-danger delete" ><i class="material-icons" style="font-size:36px;color:white">delete</i></button>
     </div> 
 
 
   </div>
-    <hr>
-  {% endfor %}
+<hr>
+{% endfor %}
     
 
 <div>
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-      </script>
-        
-      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <link rel="stylesheet" href="{% static 'style.css'%}"> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src={% static 'script.js'%}></script>
 
-
-
-<script>
-
-$('#submit-1').on('click',function(){
-  axios.post('http://127.0.0.1:8000/customer/create', {
-    name:  $('#name').val(),
-    mobile:  $('#mobile').val(),
-  })
-  .then(function (response) {
-    
-    console.log(response)
-    location.reload()
-  });
-  })
-
-
-
-
-
-
-$('.delete').on('click', function(){
-  confirm_1=confirm('Confirm Deletion');
-  if (confirm_1==true)
-  {console.log("deleted")
-  var $this = $(this);
-  var cust_id = $this.attr('data-id');
-  console.log(cust_id)
-  delete_cust(cust_id)
-  }
-  
-
-});
- 
-  function delete_cust(cust_id){
-      axios.post('http://127.0.0.1:8000/customer/delete',{
-        'id':cust_id
-      })
-  .then(function (response) {
-    console.log(response)
-    location.reload()
-  });
-  
-    
-   
- }  
-
-
-
-
-
-let cust_id_1;
- $('.update').on('click', function(){
-  console.log("updated")
-   $('.update').attr("data-toggle","modal");
-  $('.update').attr("data-target","#exampleModalCenter2");
-  
-
-  var $this = $(this);
-  cust_id_1 = $this.attr('data-id');
-  axios.post('http://127.0.0.1:8000/customer/fetch_single',{
-        'id':cust_id_1
-      }).then(function (response) {
-     $('#name-2').attr("value",response.data.name);
-     $('#mobile-2').attr("value",response.data.mobile);
-
-  });
-
-  
-
-
-});
-
-
-
-$('#submit-2').on('click',function(){
-  confirm_2=confirm("Confirm Updation");
-   
-  if (confirm_2==true){
-  update_cust(cust_id_1)}
-  })
- 
-
-function update_cust(cust_id){
- 
-  
-      axios.post('http://127.0.0.1:8000/customer/update',{
-        id:cust_id,
-        name:  $('#name-2').val(),
-        mobile:  $('#mobile-2').val(),
-      })
-  .then(function (response) {
-    console.log(response)
-    location.reload() 
-  });
- }   
-
-
-
- 
-
-
-
-
-
-
-</script>
   </body>
 </html>

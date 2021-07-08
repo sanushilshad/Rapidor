@@ -82,10 +82,10 @@ def delete(request):
         return JsonResponse({"message": "Invalid Customer ID"})
 
 
-def blah(request):
+def mains(request):
     customers=Customer.objects.all().order_by('id')
     # return JsonResponse('main.html',customers,safe=False)
-    return render (request,'main.html',{'articles':customers})
+    return render (request,'main.html',{'customers':customers})
 
 # # @csrf_exempt
 # # def create_cust(request):
