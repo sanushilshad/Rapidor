@@ -8,14 +8,15 @@ from .models import Customer
 # Create your views here.
 @csrf_exempt
 def create_customer(request):
-   
-    body=request.body
-    json_body=json.loads(body)
-    cust_1=Customer()
-    cust_1.name=json_body['name']
-    cust_1.mobile=json_body['mobile']
+    body = request.body
+    json_body = json.loads(body)
+    cust_1 = Customer()
+    cust_1.name = json_body['name']
+    cust_1.mobile = json_body['mobile']
     cust_1.save()
-    response={'message':"You have successfully created new customer: "+cust_1.name}
+    response = {
+        'message':"You have successfully created new customer: "+cust_1.name
+    }
     return JsonResponse(response)
 
 @csrf_exempt
