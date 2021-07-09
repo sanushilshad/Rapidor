@@ -4,5 +4,5 @@ from django.db import models
 class Product(models.Model):
     name = models.CharField(max_length=50)
     code = models.CharField(max_length=15)
-    unit_price = models.IntegerField()
-    tax_percent = models.IntegerField()
+    unit_price = models.FloatField()
+    tax_percent = models.FloatField()
