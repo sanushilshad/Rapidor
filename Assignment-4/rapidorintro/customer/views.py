@@ -104,7 +104,7 @@ def delete(request):
 def mains(request):
     customers=Customer.objects.all().order_by('id')
     # return JsonResponse('main.html',customers,safe=False)
-    return render (request,'main.html', {'customers': customers})
+    return render (request,'customer\main.html', {'customers': customers})
 
 # # @csrf_exempt
 # # def create_cust(request):
@@ -123,9 +123,3 @@ def mains(request):
 
     
     
-    
-
-
-
-
-
