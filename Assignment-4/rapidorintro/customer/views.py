@@ -15,7 +15,7 @@ def create_customer(request):
     cust_1.mobile = json_body['mobile']
     cust_1.save()
     response = {
-        'message':"You have successfully created new customer: "+cust_1.name
+        'message': "You have successfully created new customer: " + cust_1.name
     }
     return JsonResponse(response)
 
