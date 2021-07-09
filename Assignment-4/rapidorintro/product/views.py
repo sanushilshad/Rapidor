@@ -110,35 +110,6 @@ def delete(request):
 
 
 def mains(request):
-    products= Product.objects.all().order_by('id')
-    # return JsonResponse('main.html',customers,safe=False)
-    return render (request,'products\main.html', {'customers': customers})
-
-# # @csrf_exempt
-# # def create_cust(request):
-# #     if request.method == 'POST':  # data sent by user
-# #         form = Customer(request.POST)
-# #         print(form)
-# #         if form.is_valid():
-# #             form.save()  # this will save Car info to database
-# #             return HttpResponse('Car added to database')
-# #     else:  # display empty form
-# #         form = Customer()
-
-#     customers=Customer.objects.all().order_by('id')
-#     print(customers)
-#     return render(request, 'main.html', {'articles': form})
-
-    
-    
-    
-
-
-
-
-
-
-def mains(request):
     products=Product.objects.all().order_by('id')
     # return JsonResponse('main.html',customers,safe=False)
     return render (request,'product\main.html', {'products': products})
