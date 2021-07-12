@@ -30,6 +30,7 @@ def fetch_customer(request):
         print(customer.mobile)
         customer_list.append({
             'id': customer.id,
+            'username':customer.username,
             'name': customer.name,
             'mobile': customer.mobile
         })
@@ -49,6 +50,7 @@ def fetch_single_customer(request):
 
     for i in customers:
         response = {
+            'username':i.username,
             'name': i.name,
             'mobile': i.mobile,
             'id': i.id
@@ -72,6 +74,7 @@ def update(request):
     print(exist)
     if (exist):
         customer = Customer.objects.get(id=id_1)
+        # customer.username = username
         customer.name = name_1
         customer.mobile = mobile_1
         customer.save()

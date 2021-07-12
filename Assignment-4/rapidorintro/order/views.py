@@ -16,35 +16,56 @@ def order(request):
 
     lines=json_body['lines']
     product_not_exist = []
+    product_codes = list(map(lambda line: line['code'], lines))
+    # product_codes = filter(lambda line: line['code'] == "AQ-60", lines)
+
+    print(product_codes)
+    product_values = list(Product.objects.filter(code__in=product_codes).values('code'))
+    print(product_values)
+    product_exist = list(map(lambda product: product['code'], product_values))
     
-    for line in lines:
-        exist_product = Product.objects.filter(code=line['code']).exists()
-        if (exist_product == False):
-            product_not_exist.append(line['code'])
+    for product_code in product_codes:
+        if product_code not in product_exist:
+            product_not_exist.append(product_code)
+
+
+
     
     if not product_not_exist:
         order1 = Order()
         order1.customer_name = json_body['customer_name']
         order1.grand_total = calculate_totals(lines)['grand_total']
-        exist_orderno = True
-        while(exist_orderno == True):
-            order_no1 = order_number_generation()
-            exist_orderno = Order.objects.filter(order_no=order_no1).exists()
-            if (exist_orderno == False):
-                order1.order_no = order_number_generation()
-                
-        
+        order1.order_no = order_number_generation()
         order1.save()
         lines = json_body['lines']
-        for line in lines:
-            order_line = Order_line()
-            order_line.product_name = line['name']
-            order_line.product_code = line['code']
-            order_line.unit_price = line['unit_price']
-            order_line.qty = line['qty']
-            order_line.tax_rate = line['tax_rate']
-            order_line.order = order1
-            order_line.save()
+        # for line in lines:
+        #     order_line = Order_line()
+        #     order_line.product_name = line['name']
+        #     order_line.product_code = line['code']
+        #     order_line.unit_price = line['unit_price']
+        #     order_line.qty = line['qty']
+        #     order_line.tax_rate = line['tax_rate']
+        #     order_line.order = order1
+        #     order_line.save()
+        
+        # for line in lines:
+        #     Order_line.objects.bulk_create([
+        #     Order_line(product_name= line['name'], product_code=line['code'], 
+        #         unit_price=line['unit_price'],qty=line['qty'],tax_rate=line['tax_rate'],order=order1),
+        #     ])
+
+        def map_to_orderline(line):
+           return Order_line(product_name=line['name'],
+                             product_code=line['code'], 
+                             unit_price=line['unit_price'],
+                             qty=line['qty'],
+                             tax_rate=line['tax_rate'],
+                             order=order1
+                            )
+
+        bulk_entry = list((map(lambda line: map_to_orderline(line), lines)))
+        Order_line.objects.bulk_create(bulk_entry)
+
         return JsonResponse({
             "message": "Order has been created successfully with: "+order1.order_no,
             "grand_total":order1.grand_total
@@ -60,6 +81,9 @@ def order(request):
             return JsonResponse({
                 "message":"Products "+ ' , '.join(product_not_exist) + " does not exist",
             })
+
+
+
 
         
     
