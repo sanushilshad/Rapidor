@@ -149,5 +149,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
+misc.xml
+rapidorintro.iml
+workspace.xml
 # End of https://www.toptal.com/developers/gitignore/api/django
