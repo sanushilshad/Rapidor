@@ -15,35 +15,35 @@ def order(request):
     json_body = json.loads(body)
 
     lines=json_body['lines']
-    product_not_exist=[]
+    product_not_exist = []
     
     for line in lines:
-        exist_product=Product.objects.filter(code=line['code']).exists()
-        if (exist_product==False):
+        exist_product = Product.objects.filter(code=line['code']).exists()
+        if (exist_product == False):
             product_not_exist.append(line['code'])
     
     if not product_not_exist:
         order1 = Order()
         order1.customer_name = json_body['customer_name']
-        order1.grand_total=calculate_totals(lines)['grand_total']
-        exist_orderno=True
-        while(exist_orderno==True):
-            order_no1=order_number_generation()
-            exist_orderno=Order.objects.filter(order_no=order_no1).exists()
-            if (exist_orderno==False):
-                order1.order_no=order_number_generation()
+        order1.grand_total = calculate_totals(lines)['grand_total']
+        exist_orderno = True
+        while(exist_orderno == True):
+            order_no1 = order_number_generation()
+            exist_orderno = Order.objects.filter(order_no=order_no1).exists()
+            if (exist_orderno == False):
+                order1.order_no = order_number_generation()
                 
         
         order1.save()
-        lines=json_body['lines']
+        lines = json_body['lines']
         for line in lines:
-            order_line=Order_line()
+            order_line = Order_line()
             order_line.product_name = line['name']
             order_line.product_code = line['code']
             order_line.unit_price = line['unit_price']
             order_line.qty = line['qty']
             order_line.tax_rate = line['tax_rate']
-            order_line.order=order1
+            order_line.order = order1
             order_line.save()
         return JsonResponse({
             "message": "Order has been created successfully with: "+order1.order_no,
@@ -53,12 +53,12 @@ def order(request):
     else:
         if len(product_not_exist)==1:
             return JsonResponse({
-                "message":"Product "+ ' , '.join(product_not_exist) +" does not exist",
+                "message":"Product " + ' , '.join(product_not_exist) + " does not exist",
             })
 
         else:
             return JsonResponse({
-                "message":"Products "+ ' , '.join(product_not_exist) +" does not exist",
+                "message":"Products "+ ' , '.join(product_not_exist) + " does not exist",
             })
 
         
@@ -71,12 +71,12 @@ def order(request):
 
 
 def calculate_totals(lines):
-    output={}
-    grand_total=0
-    all_line_total=[]
+    output = {}
+    grand_total = 0
+    all_line_total = []
 
     for line in lines:
-        line_total_dict={}
+        line_total_dict = {}
         code = line['code']
         unit_price = line['unit_price']
         qty = line['qty']
@@ -88,11 +88,11 @@ def calculate_totals(lines):
         line_total_dict["line_total"] = line_total
         all_line_total.append(line_total_dict)
 
-    output['grand_total']=grand_total
-    output['lines']=all_line_total
+    output['grand_total'] = grand_total
+    output['lines'] = all_line_total
     return output
 
 
 def order_number_generation():     
-    order_no ="ORD" + ''.join(random.choices(string.digits, k=4))  
+    order_no = "ORD" + ''.join(random.choices(string.digits, k=4))  
     return order_no
