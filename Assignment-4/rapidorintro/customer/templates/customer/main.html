@@ -54,6 +54,9 @@
         </button>
       </div>
       <div class="modal-body">
+        <p>Username: </p>            
+        <input type="text" id="username" class="form-control" placeholder="Name" aria-describedby="basic-addon1">      
+        <br>
         <p>Name: </p>            
         <input type="text" id="name" class="form-control" placeholder="Name" aria-describedby="basic-addon1">      
         <br>           
@@ -84,7 +87,10 @@
       <div class="modal-body">
         <p>Name: </p>
         <input type="text" id="name-2" class="form-control"  aria-describedby="basic-addon1">      
-        <br>           
+        <br>    
+         <p>Username: </p>
+        <input type="text" id="username-2" class="form-control"  aria-describedby="basic-addon1">      
+        <br>       
         <p>Mobile:</p>
         <input type="number" id="mobile-2" class="form-control"  value=10 aria-describedby="basic-addon1">
         <br>
@@ -102,6 +108,7 @@
 <div class="row">
   <div style="padding-left:29px" class="col"><h3><b>#</b></h3></div>
   <div class="col"><h3><b>Name</b></h3></div>
+  <div class="col"><h3><b>Username</b></h3></div>
   <div class="col"><h3><b>Mobile</b></h3></div>
   <div class="col"><h3><b>Action</b></h3></div>
 </div>
@@ -115,6 +122,7 @@
   <div class="row">
     <div style="padding-left:29px" class="col"><h4 style='font-size:20px'>{{customer.id}}</h4></div>
     <div class="col"><h4 style='font-size:20px'>{{customer.name}}</h4></div>
+    <div class="col"><h4 style='font-size:20px'>{{customer.username}}</h4></div>
     <div class="col"><h4 style='font-size:20px'>{{customer.mobile}}</h4></div>
     <div class="col">
 

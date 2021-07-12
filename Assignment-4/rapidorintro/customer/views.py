@@ -13,6 +13,9 @@ def create_customer(request):
     cust_1 = Customer()
     cust_1.name = json_body['name']
     cust_1.mobile = json_body['mobile']
+    cust_1.username=json_body['username']
+    
+
     cust_1.save()
     response = {
         'message' :"You have successfully created new customer: " + cust_1.name
@@ -50,9 +53,9 @@ def fetch_single_customer(request):
 
     for i in customers:
         response = {
-            'username':i.username,
             'name': i.name,
             'mobile': i.mobile,
+            'username': i.username,
             'id': i.id
         }
         print("RR", response)
@@ -69,14 +72,15 @@ def update(request):
     id_1 = json_body['id']
     name_1 = json_body['name']
     mobile_1 = json_body['mobile']
+    username_1 = json_body['username']
     #Customer.objects.filter(id=1).update(name=name_1,mobile=mobile_1)
     exist = Customer.objects.filter(id=id_1).exists()
     print(exist)
     if (exist):
         customer = Customer.objects.get(id=id_1)
-        # customer.username = username
         customer.name = name_1
         customer.mobile = mobile_1
+        customer.username = username_1
         customer.save()
         return JsonResponse('Successfully updated', safe=False)
     else:

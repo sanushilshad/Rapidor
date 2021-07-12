@@ -3,6 +3,8 @@ $('#submit-1').on('click',function(){
     axios.post('http://127.0.0.1:8000/customer/create', {
       name:  $('#name').val(),
       mobile:  $('#mobile').val(),
+      username: $('#username').val().toLowerCase()
+      
     })
     .then(function (response) {
       
@@ -10,6 +12,7 @@ $('#submit-1').on('click',function(){
       location.reload()
     });
     })
+
   
   
   
@@ -52,6 +55,8 @@ $('.update').on('click', function(){
     }).then(function (response) {
         $('#name-2').attr("value",response.data.name);
         $('#mobile-2').attr("value",response.data.mobile);
+        $('#username-2').attr("value",response.data.username);
+        console.log(response.data)
     });
 });
   
@@ -70,6 +75,7 @@ function update_cust(customer_id){
         id:customer_id,
         name:  $('#name-2').val(),
         mobile:  $('#mobile-2').val(),
+        username:  $('#username-2').val().toLowerCase(),
     }).then(function (response) {
         console.log(response)
         location.reload() 
