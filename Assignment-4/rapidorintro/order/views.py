@@ -73,20 +73,27 @@ def order(request):
             bulk_entry = list((map(lambda line: map_to_orderline(line), lines)))
             Order_line.objects.bulk_create(bulk_entry)
 
+            # return JsonResponse({
+            #     "message": "Order has been created successfully with: "+order1.order_no,
+            #     "grand_total":order1.grand_total
+            # })
             return JsonResponse({
-                "message": "Order has been created successfully with: "+order1.order_no,
+                "message": "Order has been created successfully with: ",
                 "grand_total":order1.grand_total
             })
+
 
         else:
             if len(product_not_exist)==1:
                 return JsonResponse({
                     "message": "Product " + ','.join(product_not_exist) + " does not exist",
+                    "status": False
                 })
 
             else:
                 return JsonResponse({
-                    "message": "Products " + ', '.join(product_not_exist) + " does not exist",
+                    "message": "Products " + ', '.join(product_not_exist) + " does not exist", 
+                    "status": False
                 })
     else:
         return JsonResponse({
@@ -95,14 +102,32 @@ def order(request):
 
      
 
-
+def mains(request):
+    customers=Customer.objects.all().order_by('id')
+    # return JsonResponse('main.html',customers,safe=False)
+    return render (request,'order\order.html')
         
     
 #     return JsonResponse({
 #   "message": "Order has been created successfully with order_no: ORD00001",
 #   "grand_total": 55300.00}, safe=False)
     # print(json_body)
-
+@csrf_exempt
+def search(request):
+    print("searched")
+    body=request.body
+    search_value = json.loads(body)['customer']
+    print("customer:",search_value)
+    customer_list=Customer.objects.filter(username__contains=search_value).values('username')
+    print(customer_list)
+    customer_list_response=list(map(lambda customer:customer['username'], customer_list))
+    print(customer_list_response)
+        
+    return JsonResponse({
+            "message": 'Working perfectly',"status": False, 'list':customer_list_response
+        }, safe=False)
+    
+    
 
 
 def calculate_totals(lines):

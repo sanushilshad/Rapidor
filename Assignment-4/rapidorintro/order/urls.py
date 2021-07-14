@@ -11,7 +11,8 @@ urlpatterns = [
     # path('update',views.update),
     # path('delete',views.delete),
     # path('main',views.create_cust),
-    path('create',views.order, name='create_order')
+    path('create',views.mains, name='create_order'),
+    path('search',views.search,name='search')
 
     
 ]
