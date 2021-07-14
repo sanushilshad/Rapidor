@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import json
+from django.utils.regex_helper import contains
 from django.views.decorators.csrf import csrf_exempt
 from .models import Order, Order_line
 from product.models import Product
@@ -146,6 +147,37 @@ def product_list(request):
             "list": product_list,
             "status": True,
         }, safe=False)
+
+@csrf_exempt
+def cart(request):
+    print("searched")
+    body=request.body
+    json_body = json.loads(body)
+    print(json_body)
+    item_id=json_body['id']
+
+    ordered_prodcuts=Product.objects.filter(id__in=item_id)
+    product_list=[]
+    for i in ordered_prodcuts:
+        product_list.append({
+            'id': i.id,
+            'name': i.name,
+            'code': i.code,
+            'unit_price': i.unit_price,
+            'tax_percent': i.tax_percent
+        })
+    print(product_list)
+
+    
+    # search_value = json.loads(body)['customer']
+    # print("customer:",search_value)
+    # customer_list=Customer.objects.filter(username__contains=search_value).values('username')
+    # print(customer_list)
+    return JsonResponse({
+            "list":product_list,
+            "status": True,
+        }, safe=False)
+    
 
 
 
