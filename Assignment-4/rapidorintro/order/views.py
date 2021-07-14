@@ -126,8 +126,27 @@ def search(request):
     return JsonResponse({
             "message": 'Working perfectly',"status": False, 'list':customer_list_response
         }, safe=False)
+
+
+def product_list(request):
+    products=Product.objects.all().order_by('id')
     
-    
+    product_list=[]
+    for i in products:
+        product_list.append({
+            'id': i.id,
+            'name': i.name,
+            'code': i.code,
+            'unit_price': i.unit_price,
+            'tax_percent': i.tax_percent
+        })
+        
+    print("RR", product_list)
+    return JsonResponse({
+            "list": product_list,
+            "status": True,
+        }, safe=False)
+
 
 
 def calculate_totals(lines):
