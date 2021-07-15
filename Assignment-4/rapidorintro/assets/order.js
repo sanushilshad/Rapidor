@@ -120,9 +120,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
       let a =`<div class="kk">
           <div class="row productfield">
 
-          <div class="col killy">
-          <button type="button" data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
-          </div>
+          
           <div  class="col">
             <h4 class='name' style='font-size:20px; text-align:center '>${value['name']}</h4></div>
           <div  class="col">
@@ -138,6 +136,9 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
         
           <div  class="col">
             <h4 class="line_total line_total${value['id']}" style='font-size:20px; text-align:center'>0</h4></div>
+            <div class="col killy">
+            <button type="button" style="margin-left:40%" data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
+            </div>
          
           <hr>
       </div>
@@ -154,6 +155,30 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
         let $this = $(this);
         let parent_row = $this.parent().parent()
         parent_row.remove()
+        let gross_total=0;
+        let tax_total=0;
+        let grand_total=0;
+        $('.productfield').each(function(index,value){
+          qty=$(value).find('.qty-1').val()
+          unit_price=$(value).find('.unit_price').text()
+          tax_rate=$(value).find('.tax_percent').text()
+
+          //calculating and inserting gross total
+          gross_total=gross_total+(unit_price*qty)
+          $('.gross_total').text(gross_total)
+
+          // calculating and inserting tax total
+          tax_total=tax_total+(unit_price*qty)*(tax_rate/100)
+          $('.tax_total').text(tax_total.toFixed(2))
+
+          //calculating and inserting grand_total
+          grand_total=grand_total+(unit_price*qty)+(unit_price*qty)*(tax_rate/100)
+          $('.grand_total').text(grand_total)
+          
+
+          
+         })
+        
     
 
       })
