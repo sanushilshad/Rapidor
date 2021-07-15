@@ -94,7 +94,7 @@ $('#order').on('click', function(){
 
 $('#order_submit').on('click', function(){
 
-
+  $('.jj').remove()
   console.log("Clicked Submit");
     // let id_2=checked_1
     console.log(checked_1)
@@ -104,12 +104,14 @@ $('#order_submit').on('click', function(){
 
   })
   .then(function (response) {
+    
     console.log("Retuerned list:", response.data.list)
     let products_choosen = response.data.list
-
+    let value_id=[];
     $.each(products_choosen, function(index, value){
         
-      
+      value_id.push(value['id'])
+      console.log("choosen id:",value_id)
       let a =`<div class="kk">
           <div class="row">
 
@@ -127,23 +129,76 @@ $('#order_submit').on('click', function(){
             <input type='text' class='qty-1'></div>
           
           <div  class="col">
-            <h4 style='font-size:20px; text-align:center'>${value['tax_percent']}</h4></div>
+            <h4  class="tax_percent" style='font-size:20px; text-align:center'>${value['tax_percent']}</h4></div>
         
           <div  class="col">
-            <h4 class="grand_total" style='font-size:20px; text-align:center'>0</h4></div>
+            <h4 class="line_total line_total${value['id']}" style='font-size:20px; text-align:center'>0</h4></div>
          
           <hr>
-        
+      </div>
         </div>`
 
+      
+    
+
+
+    total_calculations=`
+    <div class='jj'>
+      <div class="row">
+          <div class='col align-self-end'>
+            <h4> Gross Total:</h4>
+          </div>
+          <div class='col align-self-end'>
+            <h4 class='gross_total'>0</h4>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class='col align-self-end'>
+            <h4 class='grand_total'>Grand Total: 0</h4>
+          </div>
+          
+      </div>
+
+      <div class="row">
+          <div class='col align-self-end'>
+            <h4 class='tax_total'>Tax Total: 0</h4>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class='col align-self-end'>
+            <h4 class='final_amount'>Final Amount: 0</h4>
+          </div>
+      </div>
+    </div>`
       $(".output").append(a)
+      
+
     })
 
+    $(".total_calculations").append(total_calculations)
+    
+    let gross_total=0
     $('.qty-1').on('input',function(){
-      var $this = $(this);
-      console.log( $this.val())
-      let unit_pr = $('.unit_price').text() 
-      $('.grand_total').text($this.val()*unit_pr)
+      
+      let $this = $(this);
+      let parent_row = $this.parent().parent()
+      let unit_price = parent_row.find('.unit_price').text()
+      let tax_percent = parent_row.find('.tax_percent').text()
+      let line_total=parent_row.find('.line_total')
+      let qty = $this.val()
+      let x=parseFloat(qty)*parseFloat(unit_price)
+      line_total.text(x)
+      let gross_total=0;
+      $.each(value_id, function(index, value){
+          console.log("blag",$(('.line_total'+value)).text())
+          looped=$(('.line_total'+value)).text();
+          gross_total=gross_total+parseFloat(looped)
+          console.log("gross_total:",gross_total)
+          $('.gross_total').text(gross_total)
+      })
+      
 
 
     })
