@@ -30,8 +30,8 @@ $('#search').keyup( function(){
 
 // })
 
-
 $('#order').on('click', function(){
+  
     console.log("mymy");
     axios.get('http://127.0.0.1:8000/order/list', {
     })
@@ -41,7 +41,7 @@ $('#order').on('click', function(){
        product_list = response.data.list;
        console.log(product_list)
        $('.mm').remove()
-       checked_1=[]
+       
        $.each(product_list, function(index, value){
         
         
@@ -58,17 +58,23 @@ $('#order').on('click', function(){
               <h4 style='font-size:20px; text-align:center'>${value['unit_price']}</h4></div>
             <div  class="col">
               <div class="form-check ">
-                <input class="form-check-input checky" style=margin-left:41% type="checkbox" value="" id=${value['id']}>
+                <input class="form-check-input checky" style=margin-left:41% type="checkbox"  value="" id=${value['id']}>
               </div>
           </div>
             <hr>
           </div>
           </div>`
 
-        $(".listing").append(a)    
+        $(".listing").append(a)
+           
+        
+        
+
+        
           
       });
 
+      
 
         $(".checky").on('click',function() {
           console.log('fdf')
@@ -92,7 +98,8 @@ $('#order').on('click', function(){
 
 
 
-$('#order_submit').on('click', function(){
+$('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
+  
 
   $('.jj').remove()
   console.log("Clicked Submit");
@@ -113,8 +120,8 @@ $('#order_submit').on('click', function(){
       let a =`<div class="kk">
           <div class="row productfield">
 
-          <div class="col">
-          <button type="button" data-id= ${value['id']} class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
+          <div class="col killy">
+          <button type="button" data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
           </div>
           <div  class="col">
             <h4 class='name' style='font-size:20px; text-align:center '>${value['name']}</h4></div>
@@ -140,48 +147,54 @@ $('#order_submit').on('click', function(){
     
 
 
-    total_calculations=`
-    <div class='jj'>
-      <div class="row">
-          <div class='col align-self-end'>
-            <h4> Gross Total:</h4>
-          </div>
-          <div class='col align-self-end'>
-            <h4 class='gross_total'>0</h4>
-          </div>
-      </div>
-
-
-
-      <div class="row">
-          <div class='col align-self-end'>
-            <h4 >Tax Total: </h4>
-          </div>
-          <div class='col align-self-end'>
-            <h4 class='tax_total'>0</h4>
-          </div>
-      </div>
-      <hr>
-      <div class="row">
-          <div class='col align-self-end'>
-            <h4>Grand Total</h4>
-          </div>
-
-          <div class='col align-self-end'>
-            <h4 class='grand_total'>0</h4>
-          </div>
-          
-      </div>
-     
-    </div>`
+    
       $(".output").append(a)
-      
+
+      $(".killy").on('click',function(){
+        let $this = $(this);
+        let parent_row = $this.parent().parent()
+        parent_row.remove()
+    
+
+      })
+     
 
     })
+    let b=`<div class='jj'>
+            <div class="row">
+              <div class='col align-self-end'>
+                <h4> Gross Total:</h4>
+              </div>
+            <div class='col align-self-end'>
+              <h4 class='gross_total'>0</h4>
+            </div>
+          </div>
 
-    $(".total_calculations").append(total_calculations)
+          <div class="row">
+            <div class='col align-self-end'>
+              <h4 >Tax Total: </h4>
+            </div>
+            <div class='col align-self-end'>
+              <h4 class='tax_total'>0</h4>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class='col align-self-end'>
+              <h4>Grand Total</h4>
+            </div>
+
+            <div class='col align-self-end'>
+              <h4 class='grand_total'>0</h4>
+            </div>   
+          </div>
+     
+        </div>`
+    $(".total_calculations").append(b)
+
     
-    // let gross_total=0
+    
+    
     $('.qty-1').on('input',function(){
       
       let $this = $(this);
@@ -193,24 +206,7 @@ $('#order_submit').on('click', function(){
       let x=(parseFloat(unit_price)*parseFloat(qty))
       x=x+ (parseFloat(tax_percent)/100) * x
       line_total.text(x)
-      // let gross_total=0;
-      // let tax_total=0;
-      // $.each(value_id, function(index, value){
-        // for displaying gross_total
-        //   looped=$(('.line_total'+value)).text();
-        //   gross_total=gross_total+parseFloat(looped)
-        //   console.log("gross_total:",gross_total)
-        //   $('.gross_total').text(gross_total)
-
-        // // for dsplaying tax_total
-        //   line_tax_percent =$(('.tax_percent'+value)).text();
-        //   tax_total=tax_total+(looped*(line_tax_percent/100))
-        //   console.log("tax_total:", tax_total)
-        //   $('.tax_total').text(tax_total)
-
-        // // for dsplaying grand total
-        // $('.grand_total').text(tax_total+gross_total)
-    // })
+     
         let gross_total=0;
         let tax_total=0;
         let grand_total=0;
@@ -235,20 +231,6 @@ $('#order_submit').on('click', function(){
           
          })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
       
     })
     
