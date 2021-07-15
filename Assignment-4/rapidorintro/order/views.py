@@ -23,7 +23,7 @@ def order(request):
     if (customer_code_exist):
         lines=json_body['lines']
         product_not_exist = []
-        product_codes = list(map(lambda line: line['code'], lines))
+        product_codes = list(map(lambda line: line['product_code'], lines))
         # product_codes = filter(lambda line: line['code'] == "AQ-60", lines)
 
 
@@ -41,7 +41,7 @@ def order(request):
     
         if not product_not_exist:
             order1 = Order()
-            order1.customer_name = json_body['customer_name']
+            order1.customer_name = json_body['customer_code']
             order1.grand_total = calculate_totals(lines)['grand_total']
             order1.order_no = order_number_generation()
             order1.save()
@@ -63,8 +63,8 @@ def order(request):
         #     ])
 
             def map_to_orderline(line):
-                return Order_line(product_name=line['name'],
-                                product_code=line['code'], 
+                return Order_line(product_name=line['product_name'],
+                                product_code=line['product_code'], 
                                 unit_price=line['unit_price'],
                                 qty=line['qty'],
                                 tax_rate=line['tax_rate'],
@@ -79,7 +79,7 @@ def order(request):
             #     "grand_total":order1.grand_total
             # })
             return JsonResponse({
-                "message": "Order has been created successfully with: ",
+                "message": "Order has been created successfully with:"+order1.order_no,
                 "grand_total":order1.grand_total
             })
 
@@ -188,10 +188,11 @@ def calculate_totals(lines):
 
     for line in lines:
         line_total_dict = {}
-        code = line['code']
-        unit_price = line['unit_price']
-        qty = line['qty']
-        tax_rate = line['tax_rate']
+        code = line['product_code']
+        unit_price = float(line['unit_price'])
+        qty = int(line['qty'])
+        tax_rate = float(line['tax_rate'])
+
         price_without_tax = (qty*unit_price)
         line_total = price_without_tax+(price_without_tax*(tax_rate/100))
         grand_total = grand_total+line_total

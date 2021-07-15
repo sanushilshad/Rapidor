@@ -46,7 +46,7 @@ $('#order').on('click', function(){
         
         
         let a=`<div class="mm">
-            <div class="row">
+            <div class="row ">
 
             <div class="col">
               <h4 style='font-size:20px; text-align:center'>${index+1}</h4></div>
@@ -107,29 +107,27 @@ $('#order_submit').on('click', function(){
     
     console.log("Retuerned list:", response.data.list)
     let products_choosen = response.data.list
-    let value_id=[];
     $.each(products_choosen, function(index, value){
         
-      value_id.push(value['id'])
-      console.log("choosen id:",value_id)
+  
       let a =`<div class="kk">
-          <div class="row">
+          <div class="row productfield">
 
           <div class="col">
           <button type="button" data-id= ${value['id']} class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
           </div>
           <div  class="col">
-            <h4 style='font-size:20px; text-align:center '>${value['name']}</h4></div>
+            <h4 class='name' style='font-size:20px; text-align:center '>${value['name']}</h4></div>
           <div  class="col">
-            <h4  style='font-size:20px;  text-align:center'>${value['code']}</h4></div>
+            <h4 class='code'  style='font-size:20px;  text-align:center'>${value['code']}</h4></div>
           <div  class="col">
             <h4 class='unit_price' style='font-size:20px; text-align:center'>${value['unit_price']}</h4></div>
         
           <div  class="col">
-            <input type='text' class='qty-1'></div>
+            <input type='text' class='qty-1' value=0></div>
           
           <div  class="col">
-            <h4  class="tax_percent" style='font-size:20px; text-align:center'>${value['tax_percent']}</h4></div>
+            <h4  class="tax_percent tax_percent${value['id']}" style='font-size:20px; text-align:center'>${value['tax_percent']}</h4></div>
         
           <div  class="col">
             <h4 class="line_total line_total${value['id']}" style='font-size:20px; text-align:center'>0</h4></div>
@@ -153,24 +151,28 @@ $('#order_submit').on('click', function(){
           </div>
       </div>
 
+
+
       <div class="row">
           <div class='col align-self-end'>
-            <h4 class='grand_total'>Grand Total: 0</h4>
+            <h4 >Tax Total: </h4>
+          </div>
+          <div class='col align-self-end'>
+            <h4 class='tax_total'>0</h4>
+          </div>
+      </div>
+      <hr>
+      <div class="row">
+          <div class='col align-self-end'>
+            <h4>Grand Total</h4>
+          </div>
+
+          <div class='col align-self-end'>
+            <h4 class='grand_total'>0</h4>
           </div>
           
       </div>
-
-      <div class="row">
-          <div class='col align-self-end'>
-            <h4 class='tax_total'>Tax Total: 0</h4>
-          </div>
-      </div>
-
-      <div class="row">
-          <div class='col align-self-end'>
-            <h4 class='final_amount'>Final Amount: 0</h4>
-          </div>
-      </div>
+     
     </div>`
       $(".output").append(a)
       
@@ -179,7 +181,7 @@ $('#order_submit').on('click', function(){
 
     $(".total_calculations").append(total_calculations)
     
-    let gross_total=0
+    // let gross_total=0
     $('.qty-1').on('input',function(){
       
       let $this = $(this);
@@ -188,43 +190,105 @@ $('#order_submit').on('click', function(){
       let tax_percent = parent_row.find('.tax_percent').text()
       let line_total=parent_row.find('.line_total')
       let qty = $this.val()
-      let x=parseFloat(qty)*parseFloat(unit_price)
+      let x=(parseFloat(unit_price)*parseFloat(qty))
+      x=x+ (parseFloat(tax_percent)/100) * x
       line_total.text(x)
-      let gross_total=0;
-      $.each(value_id, function(index, value){
-          console.log("blag",$(('.line_total'+value)).text())
-          looped=$(('.line_total'+value)).text();
-          gross_total=gross_total+parseFloat(looped)
-          console.log("gross_total:",gross_total)
+      // let gross_total=0;
+      // let tax_total=0;
+      // $.each(value_id, function(index, value){
+        // for displaying gross_total
+        //   looped=$(('.line_total'+value)).text();
+        //   gross_total=gross_total+parseFloat(looped)
+        //   console.log("gross_total:",gross_total)
+        //   $('.gross_total').text(gross_total)
+
+        // // for dsplaying tax_total
+        //   line_tax_percent =$(('.tax_percent'+value)).text();
+        //   tax_total=tax_total+(looped*(line_tax_percent/100))
+        //   console.log("tax_total:", tax_total)
+        //   $('.tax_total').text(tax_total)
+
+        // // for dsplaying grand total
+        // $('.grand_total').text(tax_total+gross_total)
+    // })
+        let gross_total=0;
+        let tax_total=0;
+        let grand_total=0;
+        $('.productfield').each(function(index,value){
+          qty=$(value).find('.qty-1').val()
+          unit_price=$(value).find('.unit_price').text()
+          tax_rate=$(value).find('.tax_percent').text()
+
+          //calculating and inserting gross total
+          gross_total=gross_total+(unit_price*qty)
           $('.gross_total').text(gross_total)
-      })
+
+          // calculating and inserting tax total
+          tax_total=tax_total+(unit_price*qty)*(tax_rate/100)
+          $('.tax_total').text(tax_total.toFixed(2))
+
+          //calculating and inserting grand_total
+          grand_total=grand_total+(unit_price*qty)+(unit_price*qty)*(tax_rate/100)
+          $('.grand_total').text(grand_total)
+          
+
+          
+         })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      
+    })
+    
+   })
+})
+
+
+
+
+$('#onsubmit').on('click', function(){
+ let lines=[]
+ $('.productfield').each(function(index,value){
+  let product_list={}
+  product_list['product_name']=$(value).find('.name').text()
+  product_list['product_code']=$(value).find('.code').text()
+  product_list['qty']=$(value).find('.qty-1').val()
+  product_list['unit_price']=$(value).find('.unit_price').text()
+  product_list['tax_rate']=$(value).find('.tax_percent').text()
+  lines.push(product_list)
+  
+ })
+    console.log(lines)
+    console.log("Entered: " + $('#search').val());
+    
+    axios.post('http://127.0.0.1:8000/order/create', {
+      "customer_code": $('#search').val(),
+      "lines":lines,
       
 
 
     })
+    .then(function (response) {
+      console.log('lines')
+      alert(response.data.message);
 
-
-
-
-
-  //   $('.qty-1').on('input',function(){
-  //     console.log('quantity clicked')
-  //     console.log($(this).val())
-  //     let qty_3 = $('.qty-1').val() 
-  //     let unit_pr = $('.unit_price').text() 
-  //     console.log("unit_pr",unit_pr)
-  //     console.log(qty_3*unit_pr)
-  //     let qty =$('.grand_total').text(qty_3*unit_pr) 
-
-  //   })
-    
-  
-
-    
-
-    
-   })
+ 
+  }) 
 })
+
+
 
 
 

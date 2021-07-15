@@ -11,10 +11,11 @@ urlpatterns = [
     # path('update',views.update),
     # path('delete',views.delete),
     # path('main',views.create_cust),
-    path('create',views.mains, name='create_order'),
+    path('create',views.order, name='create_order'),
     path('search',views.search,name='search'),
     path('list',views.product_list, name='product_list'),
     path('cart',views.cart, name='cart'),
+    path('',views.mains,name='main')
 
     
 ]

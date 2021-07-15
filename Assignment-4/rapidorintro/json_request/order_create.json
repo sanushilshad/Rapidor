@@ -1,20 +1,22 @@
-{
-    "customer_name": "sanu",
-    "customer_code": "ABC",
-    "lines": [
-      {
-        "name": "Aquaguard",
-        "code": "AQ-60",
-        "unit_price": 10000,
-        "qty": 2,
-        "tax_rate": 12
-      },
-      {
-        "name": "Mi A2",
-        "code": "XI-M2",
-        "unit_price": 10000,
-        "qty": 1,
-        "tax_rate": 5
-      }
-    ]
-  }
+
+
+  {
+  "customer_name": "sanu",
+  "customer_code": "ABC",
+  "lines": [
+    {
+      "product_name": "Aquaguard",
+      "product_code": "AQ-60",
+      "unit_price": 10000,
+      "qty": 2,
+      "tax_rate": 12
+    },
+    {
+      "product_name": "Mi A2",
+      "product_code": "XI-M2",
+      "unit_price": 10000,
+      "qty": 1,
+      "tax_rate": 5
+    }
+  ]
+}
