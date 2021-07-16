@@ -19,7 +19,7 @@ $('#search').keyup( function(){
       $.each(search_list, function(index, value) {
         $("#datalistOptions").append(`<option class='options' value=${value}>`);
         });
-        $('#customer_name').text('Name: '+ $('#search').val())
+        $('#customer_name').text('customer_name:'+$('#search').val())
     })
 })
 
@@ -47,19 +47,19 @@ $('#order').on('click', function(){
         
         
         let a=`<div class="mm">
-            <div class="row ">
+            <div class="row">
 
-            <div class="col">
+            <div class="col ${value['code']}">
               <h4 style='font-size:20px; text-align:center'>${index+1}</h4></div>
             <div  class="col">
               <h4 style='font-size:20px; text-align:center '>${value['name']}</h4></div>
-            <div  class="col">
+            <div  class="col code">
               <h4 style='font-size:20px; text-align:center'>${value['code']}</h4></div>
             <div  class="col">
               <h4 style='font-size:20px; text-align:center'>${value['unit_price']}</h4></div>
             <div  class="col">
               <div class="form-check ">
-                <input class="form-check-input checky" style=margin-left:41% type="checkbox"  value="" id=${value['id']}>
+                <input class="form-check-input checky" style=margin-left:41% type="checkbox"  value="" >
               </div>
           </div>
             <hr>
@@ -77,20 +77,20 @@ $('#order').on('click', function(){
 
       
 
-        $(".checky").on('click',function() {
-          console.log('fdf')
-          if (this.checked) {
-          checked_1.push($(this).attr('id'))
-          console.log(checked_1)
-          }
-          else if(!this.checked){
-            let inde=checked_1.indexOf($(this).attr('id'))
-            checked_1.splice(inde,1)
-          console.log(checked_1)
+  //       $(".checky").on('click',function() {
+  //         console.log('fdf')
+  //         if (this.checked) {
+  //         checked_1.push($(this).attr('id'))
+  //         console.log(checked_1)
+  //         }
+  //         else if(!this.checked){
+  //           let inde=checked_1.indexOf($(this).attr('id'))
+  //           checked_1.splice(inde,1)
+  //         console.log(checked_1)
   
-          }
+  //         }
   
-  });
+  // });
     });
 })
 
@@ -100,57 +100,66 @@ $('#order').on('click', function(){
 
 
 $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
+  $('.mm').each(function(index,value){
+    if($(value).find('.checky').is(":checked"))
+    {
+      checked_1.push($(value).find('.code').text());
+      
+    }
+    console.log('checkd_list:',checked_1)
+ })
+ 
   
 
-  $('.jj').remove()
-  console.log("Clicked Submit");
-    // let id_2=checked_1
-    console.log(checked_1)
+  // $('.jj').remove()
+  // console.log("Clicked Submit");
+  //   // let id_2=checked_1
+  //   console.log(checked_1)
 
-  axios.post('http://127.0.0.1:8000/order/cart', {
-    'id':  checked_1
+  // axios.post('http://127.0.0.1:8000/order/cart', {
+  //   'id':  checked_1
 
-  })
-  .then(function (response) {
+  // })
+  // .then(function (response) {
     
-    console.log("Retuerned list:", response.data.list)
-    let products_choosen = response.data.list
-    $.each(products_choosen, function(index, value){
+  //   console.log("Retuerned list:", response.data.list)
+  //   let products_choosen = response.data.list
+  //   $.each(products_choosen, function(index, value){
         
   
-      let a =`<div class="kk">
-          <div class="row productfield">
+  //     let a =`<div class="kk">
+  //         <div class="row productfield">
 
           
-          <div  class="col">
-            <h4 class='name' style='font-size:20px; text-align:center '>${value['name']}</h4></div>
-          <div  class="col">
-            <h4 class='code'  style='font-size:20px;  text-align:center'>${value['code']}</h4></div>
-          <div  class="col">
-            <h4 class='unit_price' style='font-size:20px; text-align:center'>${value['unit_price']}</h4></div>
+  //         <div  class="col">
+  //           <h4 class='name' style='font-size:20px; text-align:center '>${value['name']}</h4></div>
+  //         <div  class="col">
+  //           <h4 class='code'  style='font-size:20px;  text-align:center'>${value['code']}</h4></div>
+  //         <div  class="col">
+  //           <h4 class='unit_price' style='font-size:20px; text-align:center'>${value['unit_price']}</h4></div>
         
-          <div  class="col">
-            <input type='text' class='qty-1' value=0></div>
+  //         <div  class="col">
+  //           <input type="number" class='qty-1' value=0></div>
           
-          <div  class="col">
-            <h4  class="tax_percent tax_percent${value['id']}" style='font-size:20px; text-align:center'>${value['tax_percent']}</h4></div>
+  //         <div  class="col">
+  //           <h4  class="tax_percent tax_percent${value['id']}" style='font-size:20px; text-align:center'>${value['tax_percent']}</h4></div>
         
-          <div  class="col">
-            <h4 class="line_total line_total${value['id']}" style='font-size:20px; text-align:center'>0</h4></div>
-            <div class="col destry_the_selected_product">
-            <button type="button" style="margin-left:40%" data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
-            </div>
+  //         <div  class="col">
+  //           <h4 class="line_total line_total${value['id']}" style='font-size:20px; text-align:center'>0</h4></div>
+  //           <div class="col destry_the_selected_product">
+  //           <button type="button" style="margin-left:40%" data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
+  //           </div>
          
-          <hr>
-      </div>
-        </div>`
+  //         <hr>
+  //     </div>
+  //       </div>`
 
       
     
 
 
     
-      $(".output").append(a)
+  //     $(".output").append(a)
 
       $(".destry_the_selected_product").on('click',function(){
         let $this = $(this);
@@ -225,6 +234,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     
     
     $('.qty-1').on('input',function(){
+      $('#onsubmit').attr('disabled',false);
       
       let $this = $(this);
       let parent_row = $this.parent().parent()
