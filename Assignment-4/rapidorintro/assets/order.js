@@ -20,7 +20,7 @@ $('#search').keyup( function(){
       $.each(search_list, function(index, value) {
         $("#datalistOptions").append(`<option class='options' value=${value}>`);
         });
-        $('#customer_name').text('customer_name:'+$('#search').val())
+        $('#customer_name').text('customer_name: '+$('#search').val())
     })
 })
 
@@ -188,6 +188,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     </div>
   </div>`
   $(".total_calculations").append(b)
+  all_calculations()
 
   $('.qty-1').on('input',function(){
     $('#onsubmit').attr('disabled',false);
@@ -202,29 +203,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     x=x+ (parseFloat(tax_percent)/100) * x
     line_total.text(x)
  
-    let gross_total=0;
-    let tax_total=0;
-    let grand_total=0;
-    $('.productfield').each(function(index,value){
-      qty=$(value).find('.qty-1').val()
-      unit_price=$(value).find('.unit_price').text()
-      tax_rate=$(value).find('.tax_percent').text()
-
-      //calculating and inserting gross total
-      gross_total=gross_total+(unit_price*qty)
-      $('.gross_total').text(gross_total)
-
-      // calculating and inserting tax total
-      tax_total=tax_total+(unit_price*qty)*(tax_rate/100)
-      $('.tax_total').text(tax_total.toFixed(2))
-
-      //calculating and inserting grand_total
-      grand_total=grand_total+(unit_price*qty)+(unit_price*qty)*(tax_rate/100)
-      $('.grand_total').text(grand_total)
-      
-
-      
-     })
+    all_calculations()
   })
 
 
@@ -240,35 +219,8 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     
     let parent_row = $this.parent().parent()
     parent_row.remove()
-    let gross_total=0;
-    let tax_total=0;
-    let grand_total=0;
-    $('.gross_total').text(gross_total)
-    $('.tax_total').text(tax_total.toFixed(2))
-     $('.grand_total').text(grand_total)
-    $('.productfield').each(function(index,value){
-      qty=$(value).find('.qty-1').val()
-      unit_price=$(value).find('.unit_price').text()
-      tax_rate=$(value).find('.tax_percent').text()
-
-      //calculating and inserting gross total
-      gross_total=gross_total+(unit_price*qty)
-      $('.gross_total').text(gross_total)
-
-      // calculating and inserting tax total
-      tax_total=tax_total+(unit_price*qty)*(tax_rate/100)
-      $('.tax_total').text(tax_total.toFixed(2))
-
-      //calculating and inserting grand_total
-      grand_total=grand_total+(unit_price*qty)+(unit_price*qty)*(tax_rate/100)
-      $('.grand_total').text(grand_total)
-      
-
-      
-     })
-    
-
-
+    all_calculations()
+  
   })
 
 
@@ -317,6 +269,35 @@ $('#onsubmit').on('click', function(){
   }) 
 })
 
+
+function all_calculations(){
+  let gross_total=0;
+    let tax_total=0;
+    let grand_total=0;
+    $('.gross_total').text(gross_total)
+    $('.tax_total').text(tax_total.toFixed(2))
+     $('.grand_total').text(grand_total)
+    $('.productfield').each(function(index,value){
+      qty=$(value).find('.qty-1').val()
+      unit_price=$(value).find('.unit_price').text()
+      tax_rate=$(value).find('.tax_percent').text()
+
+      //calculating and inserting gross total
+      gross_total=gross_total+(unit_price*qty)
+      $('.gross_total').text(gross_total)
+
+      // calculating and inserting tax total
+      tax_total=tax_total+(unit_price*qty)*(tax_rate/100)
+      $('.tax_total').text(tax_total.toFixed(2))
+
+      //calculating and inserting grand_total
+      grand_total=grand_total+(unit_price*qty)+(unit_price*qty)*(tax_rate/100)
+      $('.grand_total').text(grand_total)
+      
+
+      
+     })
+}
 
 
 
