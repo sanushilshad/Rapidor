@@ -114,8 +114,9 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
   // }
   $('.jj').remove()
   $('.mm').each(function(index,values){
-    // code3=$(values).find('.code').text()
-    // if (checked_1.indexOf(code3) >= 0)
+    code3=$(values).find('.code').text()
+    if (checked_1.indexOf(code3) == -1)
+    {
     if($(values).find('.checky').is(":checked")){
       let checked_code=($(values).find('.code').text())
       checked_1.push(checked_code);
@@ -151,6 +152,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
   $(".output").append(a)
 
     }
+  }
     
     
   })
