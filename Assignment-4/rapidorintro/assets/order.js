@@ -19,6 +19,7 @@ $('#search').keyup( function(){
       $.each(search_list, function(index, value) {
         $("#datalistOptions").append(`<option class='options' value=${value}>`);
         });
+        $('#customer_name').text('Name: '+ $('#search').val())
     })
 })
 
@@ -136,7 +137,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
         
           <div  class="col">
             <h4 class="line_total line_total${value['id']}" style='font-size:20px; text-align:center'>0</h4></div>
-            <div class="col killy">
+            <div class="col destry_the_selected_product">
             <button type="button" style="margin-left:40%" data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
             </div>
          
@@ -151,13 +152,16 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     
       $(".output").append(a)
 
-      $(".killy").on('click',function(){
+      $(".destry_the_selected_product").on('click',function(){
         let $this = $(this);
         let parent_row = $this.parent().parent()
         parent_row.remove()
         let gross_total=0;
         let tax_total=0;
         let grand_total=0;
+        $('.gross_total').text(gross_total)
+        $('.tax_total').text(tax_total.toFixed(2))
+         $('.grand_total').text(grand_total)
         $('.productfield').each(function(index,value){
           qty=$(value).find('.qty-1').val()
           unit_price=$(value).find('.unit_price').text()
