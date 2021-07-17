@@ -124,7 +124,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
       console.log(checked_1)
      
       let b =
-      `<div class="">
+      `<div class="pp">
         <div class="row productfield">
 
       
@@ -156,27 +156,69 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     }
     
   }
-  // else if((checked_1.indexOf(code3) !== -1)){
+  else if((checked_1.indexOf(code3)) !== -1){
+    if(($(values).find('.checky')).prop("checked")== false){
     
-  //   if($(values).find('.checky').prop("checked", true)){
-  //     let del12;
-  //     console.log(checked_1)
-      
-  //      $(values).parent().find('.code').text()
-  //     console.log($(values).parent().find('.code').text())
-  //     // let inde=checked_1.indexOf(del12)
-  //     // checked_1.splice(inde,1)
-  //     // console.log(checked_1)
-      
-  //     // $('.kk').each(function(index,value){
-  //     //   if($(value).find('.code').text()==del12){
-  //     //     $(this).remove()
-  //     //   }
+        console.log(checked_1)
+        
+        console.log('dfd',checked_1.indexOf(code3),code3)
+        checked_1 = $.grep(checked_1, function(value) {
+              return value != code3;
+              });
+        console.log(checked_1)
 
-  //     // })
+
+        $(".pp").each(function(index,valued){
+          console.log($(valued).find('.code').text())
+          if($(valued).find('.code').text()==code3){
+            console.log('fff')
+            $(valued).remove()
+          }
+        })
+
+
+        
+         
+    } 
+      //   // $(".pp").each(function(index,values1){
+      //   //   console.log("bg",$(values1).find('.code').text())
+      //   //   if($(values1).find('.code').text()==code3){
+      //   //     console.log('fff')
+      //   //     $(values1).remove()
+      //   //   }
+
+      //   //   })
+      // }
+  }
+     
+
+    
+    
+    // if($(values).find('.checky').prop("checked", true)){
+    //   let del12 = $(values).find('.code').text();
+    //   console.log(checked_1);
+    //   console.log($(values).find('.code').text());
+    //   if(checked_1.indexOf(del12) >0){
+    //     checked_1 = $.grep(checked_1, function(value) {
+    //     return value != del12;
+    //     });
+    // console.log(checked_1)
+
+    // $(".pp").each(function(index,values){
+    //   console.log($(values).find('.code').text())
+    //   if($(values).find('.code').text()==del12){
+    //     console.log('fff')
+    //     // $(values).remove()
+    //   }
+     
+    
+    // })
+
+
+    //   }    
   
-  //   }
-  // }
+    // }
+ 
     
     
   })
