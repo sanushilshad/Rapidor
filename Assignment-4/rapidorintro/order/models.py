@@ -7,7 +7,7 @@ class Order(models.Model):
     grand_total = models.FloatField(null=True)
 
     def __str__(self):
-            return self.customer_name
+            return str(self.order_no) + "," + str(self.customer_name) + "," + str(self.grand_total)
     
     
         
@@ -21,7 +21,7 @@ class Order_line(models.Model):
     order = models.ForeignKey(Order,on_delete=models.CASCADE)
 
     def __str__(self):
-            return self.order
+            return str(self.product_code) + "," + str(self.qty) + "," + str(self.order.order_no)
     
     
 
