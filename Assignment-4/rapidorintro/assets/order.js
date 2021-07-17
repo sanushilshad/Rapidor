@@ -28,12 +28,10 @@ $('#search').keyup( function(){
 
 
 
-// $('.update').on(click,function(){
 
-
-// })
 
 $('#order').on('click', function(){
+  
   
     console.log("mymy");
     axios.get('http://127.0.0.1:8000/order/list', {
@@ -87,20 +85,7 @@ $('#order').on('click', function(){
         }
               })
 
-  //       $(".checky").on('click',function() {
-  //         console.log('fdf')
-  //         if (this.checked) {
-  //         checked_1.push($(this).attr('id'))
-  //         console.log(checked_1)
-  //         }
-  //         else if(!this.checked){
-          //   let inde=checked_1.indexOf($(this).attr('id'))
-          //   checked_1.splice(inde,1)
-          // console.log(checked_1)
-  
-  //         }
-  
-  // });
+
     });
 })
 
@@ -110,9 +95,15 @@ $('#order').on('click', function(){
 
 
 $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
-  // if (checked_1.indexOf(code3) >= 0){
-  //   ($(values).find('.checky')).attr('checked', true)
-  // }
+  if ((checked_1.length)==0){
+    $('#onsubmit').css({ visibility: 'hidden' })
+    $('.jj').css({ visibility: 'hidden' })
+  }
+  else{
+    $('#onsubmit').css({ visibility: 'visible' })
+    $('.jj').css({ visibility: 'visible' })
+  }
+
   $('.jj').remove()
   $('.mm').each(function(index,values){
     code3=$(values).find('.code').text()
@@ -125,7 +116,7 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
      
       let b =
       `<div class="pp">
-        <div class="row productfield">
+        <div class="row productfield" >
 
       
         <div  class="col">
@@ -143,11 +134,12 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     
         <div  class="col">
           <h4 class="line_total line_total${$(values).find('.id').text()}" style='font-size:20px; text-align:center'>0</h4></div>
-        <div class="col destry_the_selected_product">
-          <button type="button" style="margin-left:40%" data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
+        <div class="col destry_the_selected_product " >
+          <button type="button" style="margin-left:40%; margin-bottom:10% " data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
         </div>
-     
+        
         <hr>
+        <br>
       </div>
     </div>`
 
@@ -175,54 +167,15 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
             $(valued).remove()
           }
         })
-
-
-        
+   
          
     } 
-      //   // $(".pp").each(function(index,values1){
-      //   //   console.log("bg",$(values1).find('.code').text())
-      //   //   if($(values1).find('.code').text()==code3){
-      //   //     console.log('fff')
-      //   //     $(values1).remove()
-      //   //   }
 
-      //   //   })
-      // }
   }
      
 
-    
-    
-    // if($(values).find('.checky').prop("checked", true)){
-    //   let del12 = $(values).find('.code').text();
-    //   console.log(checked_1);
-    //   console.log($(values).find('.code').text());
-    //   if(checked_1.indexOf(del12) >0){
-    //     checked_1 = $.grep(checked_1, function(value) {
-    //     return value != del12;
-    //     });
-    // console.log(checked_1)
-
-    // $(".pp").each(function(index,values){
-    //   console.log($(values).find('.code').text())
-    //   if($(values).find('.code').text()==del12){
-    //     console.log('fff')
-    //     // $(values).remove()
-    //   }
-     
-    
-    // })
-
-
-    //   }    
-  
-    // }
- 
-    
-    
   })
-  // console.log(checked_1);
+
   let b=
   `<div class='jj'>
     <div class="row">
@@ -270,8 +223,16 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
         <h4 class='grand_total'>0</h4>
       </div>   
     </div>
-  </div>`
+  </div>
+  `
   $(".total_calculations").append(b)
+  if ((checked_1.length)==0){
+  $('.jj').css({ visibility: 'hidden' })}
+
+  else{
+    $('.jj').css({ visibility: 'visible' })
+    $('#onsubmit').css({visibility: 'visible' })
+  }
   all_calculations()
   // let bill_discount = parseFloat($('.bill_discount').val())
 
@@ -281,7 +242,9 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
   })
    
   $('.qty-1',).on('input',function(){
-    $('#onsubmit').attr('disabled',false);
+    // $('#onsubmit').attr('disabled',false);
+    
+    
   
     let $this = $(this);
     let parent_row = $this.parent().parent()
@@ -302,6 +265,8 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
 
   $(".destry_the_selected_product").on('click',function(){
 
+   
+
     console.log('blag')
     let $this = $(this);
     
@@ -315,26 +280,17 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     
     let parent_row = $this.parent().parent()
     parent_row.remove()
+    if (checked_1.length==0){
+      // $('#onsubmit').attr('disabled',true);
+      $('#onsubmit').css({ visibility: 'hidden' })
+      $('.jj').css({ visibility: 'hidden' })
+    }
     all_calculations()
   
   })
 
 
- 
-
-
 })
-
-
-
-    //  $.each(product_list, function(index, value){
-      
-    //   if ($.inArray(value['code'], checked_1) !== -1)
-    //  {    
-            
-    //     console.log(value['code'])
-
-    //  }
 
 
     
