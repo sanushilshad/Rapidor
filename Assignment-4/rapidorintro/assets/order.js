@@ -227,8 +227,9 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
   `
   $(".total_calculations").append(b)
   if ((checked_1.length)==0){
-  $('.jj').css({ visibility: 'hidden' })}
-
+  $('.jj').css({ visibility: 'hidden' })
+  $('#onsubmit').css({visibility: 'hidden' })
+  }
   else{
     $('.jj').css({ visibility: 'visible' })
     $('#onsubmit').css({visibility: 'visible' })
