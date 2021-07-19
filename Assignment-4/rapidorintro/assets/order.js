@@ -320,7 +320,14 @@ $('#onsubmit').on('click', function(){
     })
     .then(function (response) {
       // console.log('lines')
-      alert(response.data.message);
+      // alert(response.data.message);
+      new Noty({
+        text: response.data.message,
+        theme    : 'mint',
+        type : 'success',
+        timeout : false,
+ 
+    }).show();
 
  
   }) 

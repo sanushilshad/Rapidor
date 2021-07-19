@@ -57,3 +57,8 @@
     
    }
 
+
+.noty_theme__mint.noty_bar .noty_body {
+    padding: 20px;
+    font-size: 14px;
+}
