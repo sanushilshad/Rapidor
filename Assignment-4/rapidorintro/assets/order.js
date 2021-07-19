@@ -247,15 +247,15 @@ $('#order_submit').attr('data-bs-dismiss',"modal").on('click', function(){
     
     
   
-    let $this = $(this);
-    let parent_row = $this.parent().parent()
-    let unit_price = parent_row.find('.unit_price').text()
-    let tax_percent = parent_row.find('.tax_percent').text()
-    let line_total=parent_row.find('.line_total')
-    let qty = $this.val()
-    let x=(parseFloat(unit_price)*parseFloat(qty))
-    x=x+ (parseFloat(tax_percent)/100) * x
-    line_total.text(x)
+    // let $this = $(this);
+    // let parent_row = $this.parent().parent()
+    // let unit_price = parent_row.find('.unit_price').text()
+    // let tax_percent = parent_row.find('.tax_percent').text()
+    // let line_total=parent_row.find('.line_total')
+    // let qty = $this.val()
+    // let x=(parseFloat(unit_price)*parseFloat(qty))
+    // x=x+ (parseFloat(tax_percent)/100) * x
+    // line_total.text(x)
  
     all_calculations()
   })
@@ -337,24 +337,35 @@ function all_calculations(){
      $('.grand_total').text(grand_total)
      $('.discount_total').text(discount_total)
     $('.productfield').each(function(index,value){
-      qty=$(value).find('.qty-1').val()
-      unit_price=$(value).find('.unit_price').text()
-      tax_rate=$(value).find('.tax_percent').text()
+      // qty=$(value).find('.qty-1').val()
+      let bill_discount = parseFloat($('.bill_discount').val())
+      let unit_price = $(value).find('.unit_price').text()
+      let tax_rate=$(value).find('.tax_percent').text()
+      let tax_percent = $(value).find('.tax_percent').text()
+      let line_total= $(value).find('.line_total').text()
+      let qty = $(value).find('.qty-1').val()
+
+      // calculating line total  and line total
+      let gross_amount = (unit_price)*(qty)
+      discount_value = (gross_amount * (bill_discount/100)) 
+      discounted_amount = gross_amount-discount_value
+      line_total = discounted_amount + ((parseFloat(tax_percent)/100) * discounted_amount)
+      $(value).find('.line_total').text(line_total)
+
 
       //calculating and inserting gross total
-      let gross_amount = (unit_price*qty)
       gross_total += gross_amount
       $('.gross_total').text(gross_total)
 
       // calculating and inserting tax total
-      let tax_amount = gross_amount *(tax_rate/100)
+      let tax_amount = discounted_amount * (tax_rate/100)
       tax_total += tax_amount
       $('.tax_total').text(tax_total.toFixed(2))
       
 
 
        //calculating total discount amount
-       let bill_discount = parseFloat($('.bill_discount').val())
+      //  let bill_discount = parseFloat($('.bill_discount').val())
        discount_total += (gross_amount*(bill_discount/100))
        console.log(discount_total)
        $('.discount_total').text(discount_total)
@@ -362,8 +373,13 @@ function all_calculations(){
 
 
       //calculating and inserting grand_total
-      grand_total += gross_amount + tax_amount-discount_total
+      grand_total += line_total
       $('.grand_total').text(grand_total)
+
+
+      
+
+
      })
      
 
