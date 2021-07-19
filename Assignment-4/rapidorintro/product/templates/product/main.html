@@ -11,7 +11,7 @@
      {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> {% endcomment %}
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href={% static 'style.css'%} rel="stylesheet">
+      <link href='/static/style.css?v=2' rel="stylesheet">
     
     <title>Products</title>
   
@@ -131,7 +131,12 @@
     <div style="padding-left:29px" class="col"><h4 style='font-size:20px'>[[product.id]]</h4></div>
     <div class="col"><h4 style='font-size:20px'>[[product.name]]</h4></div>
     <div class="col"><h4 style='font-size:20px'>[[product.code]]</h4></div>
-    <div class="col"><h4 style='font-size:20px'>[[product.unit_price]]</h4></div>
+    <div class="col">
+      <h4 v-if="product.unit_price>50" class="color1" style='font-size:20px'>[[product.unit_price]]</h4>
+      <h4 v-else-if="product.unit_price>30" class="color2" style='font-size:20px'>[[product.unit_price]]</h4>
+      <h4 v-else class="color" style='font-size:20px'>[[product.unit_price]]</h4>
+    </div>
+    
     <div class="col"><h4 style='font-size:20px'>[[product.tax_percent]]</h4></div>
     <div class="col">
 
@@ -162,5 +167,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 {% comment %} <script src={% static 'script_2.js'%}></script> {% endcomment %}
-<script src='/static/product_vue.js?v=4'></script>
+<script src='/static/product_vue.js?v=5'></script>
 </html>
