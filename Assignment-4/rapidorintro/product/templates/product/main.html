@@ -10,6 +10,7 @@
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
      {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> {% endcomment %}
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link href={% static 'style.css'%} rel="stylesheet">
     
     <title>Products</title>
@@ -23,7 +24,7 @@
   </head>
   
   <body>
-
+<div id="app">
 
 <div class='document'>
 
@@ -112,48 +113,54 @@
 <br> 
 <div class="document_2">
 <div class="row">
-  <div style="padding-left:29px" class="col"><h3><b>#</b></h3></div>
-  <div class="col"><h3><b>Name</b></h3></div>
-  <div class="col"><h3><b>Code</b></h3></div>
-  <div class="col"><h3><b>Unit Price</b></h3></div>
-  <div class="col"><h3><b>tax Percent</b></h3></div>
-  <div class="col"><h3><b>Action</b></h3></div>
+    <div style="padding-left:29px" class="col"><h3><b>#</b></h3></div>
+    <div class="col"><h3><b>Name</b></h3></div>
+    <div class="col"><h3><b>Code</b></h3></div>
+   <div class="col"><h3><b>Unit Price</b></h3></div>
+    <div class="col"><h3><b>tax Percent</b></h3></div>
+    <div class="col"><h3><b>Action</b></h3></div>
 </div>
-<div>
+</div>
 
 
 <hr style='border-top: 4px solid black;'>
 
 <div class="document_3">
-{% for product in products %}
-  <div class="row">
-    <div style="padding-left:29px" class="col"><h4 style='font-size:20px'>{{product.id}}</h4></div>
-    <div class="col"><h4 style='font-size:20px'>{{product.name}}</h4></div>
-    <div class="col"><h4 style='font-size:20px'>{{product.code}}</h4></div>
-    <div class="col"><h4 style='font-size:20px'>{{product.unit_price}}</h4></div>
-    <div class="col"><h4 style='font-size:20px'>{{product.tax_percent}}</h4></div>
+
+  <div class="row" v-for='product in product_list'>
+    <div style="padding-left:29px" class="col"><h4 style='font-size:20px'>[[product.id]]</h4></div>
+    <div class="col"><h4 style='font-size:20px'>[[product.name]]</h4></div>
+    <div class="col"><h4 style='font-size:20px'>[[product.code]]</h4></div>
+    <div class="col"><h4 style='font-size:20px'>[[product.unit_price]]</h4></div>
+    <div class="col"><h4 style='font-size:20px'>[[product.tax_percent]]</h4></div>
     <div class="col">
 
-    <button type="button" data-id='{{product.id}}' class="btn btn-success update"><i style='font-size:36px;' class='fas fa-edit'></i></button>
-    <button type="button" data-id='{{product.id}}' class="btn btn-danger delete" ><i class="material-icons" style="font-size:36px;color:white">delete</i></button>
+      <button type="button"  :data-id='[[product.id]]' class="btn btn-success update"><i style='font-size:36px;' class='fas fa-edit'></i></button>
+      <button type="button" v-on:click = "delete_product(product)" :data-id='[[product.id]]' class="btn btn-danger delete" ><i class="material-icons" style="font-size:36px;color:white">delete</i></button>
     </div> 
 
 
   </div>
+
 <hr>
-{% endfor %}
+
+</div>
     
 
-<div>
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+</div>
+  </body>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src={% static 'script_2.js'%}></script>
+ <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  </body>
+{% comment %} <script src={% static 'script_2.js'%}></script> {% endcomment %}
+<script src='/static/product_vue.js?v=4'></script>
 </html>

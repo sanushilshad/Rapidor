@@ -29,8 +29,9 @@ def fetch_product(request):
     products = Product.objects.all().order_by('id')
 
     for product in products:
-        print(product.mobile)
+
         product_list.append({
+            'id' : product.id,
             'name': product.name,
             'code': product.code,
             'unit_price': product.unit_price,
@@ -102,10 +103,10 @@ def delete(request):
     if (exist):
         customer = Product.objects.get(id = id_1)
         customer.delete()
-        return JsonResponse('Successfully deleted', safe=False)
+        return JsonResponse({"message":'Successfully deleted','status':True}, safe=False)
     else:
         return JsonResponse({
-            "message": "Invalid Customer ID"
+            "message": "Invalid Customer ID","status": False
         })
 
 
