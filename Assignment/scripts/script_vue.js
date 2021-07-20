@@ -8,7 +8,7 @@ var punch= new Vue({
 
     },
     methods: {
-        punch: function(){
+        punch (){
             this.count-=19;
             // console.log(this.count-=19)
             if (this.count<0){
@@ -25,7 +25,7 @@ var punch= new Vue({
             }
         },
         
-        reset_punch: function(){
+        reset_punch (){
             this.disab= false;
             this.src = '/images/bag.png';
             this.count=100;

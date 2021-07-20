@@ -12,20 +12,20 @@
 <body>
 <div id="vue_app">
 
-<div class=bag >
-    <img v-bind:src="src" style="margin-top: 50%;"  alt="Bag">
+<div class="bag">
+    <img :src="src" style="margin-top: 50%;"  alt="Bag">
 </div>
 
 <div class="progress">
-    <div class=container>
-        <div v-bind:style="{width:count+'%'}" class="bar" style="width: 100%;">
+    <div class="container">
+        <div :style="{width:count+'%'}" class="bar" style="width: 100%;">
         </div>
     </div>
 </div>
 
-<div class=buttons>
-    <button v-on:click="punch" type="button" id="Btn-1" style= "padding: 15px 32px" v-bind:disabled=disab ><b style='font-size: 17px'>Punch</b></button>
-    <button v-on:click="reset_punch" type="button" id="Btn-2" style= "margin-left:61px; padding: 15px 32px" ><b style='font-size: 17px'>Reset</b></button>
+<div class="buttons">
+    <button @click="punch" type="button" id="Btn-1" style= "padding: 15px 32px" :disabled=disab ><b style='font-size: 17px'>Punch</b></button>
+    <button @click="reset_punch" type="button" id="Btn-2" style= "margin-left:61px; padding: 15px 32px" ><b style='font-size: 17px'>Reset</b></button>
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
