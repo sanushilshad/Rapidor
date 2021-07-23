@@ -29,18 +29,19 @@
     <hr>
 
 
-  
+
 
   <div class="container">
           <div class="row">
             <div class="col"><h5>Customer Search:</h5></div>
             <div class="col">
-                <input class="form-control" list="datalistOptions" id="search" placeholder="Search Customer...">
-                <datalist id="datalistOptions">
+                <input v-model="search" v-on:keyup="search_value" class="form-control" list="datalistOptions"  id="search" placeholder="Search Customer...">
+                <datalist  id="datalistOptions">
+                <option v-for='customer in search_list' class='options'  v-bind:value='customer'>
                 </datalist>
             </div>
             
-            <div class="col"><p id='customer_name'></p></div>
+            <div class="col"><p>[[search]]</p></div>
             
           </div>
   </div>
@@ -56,7 +57,7 @@
    
     <div classs='col-5' style='margin:auto; 
     width:200px;' >
-      <button type="button" class="btn btn-primary" style="justify-content: center;" 
+      <button v-on:click='order_list' type="button" class="btn btn-primary" style="justify-content: center;" 
       id="order" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       Products
       </button>
@@ -89,22 +90,42 @@
           </div>
         
         
-        <div class='listing'>
-        
-          
+          <div class='listing'>
 
-    {% comment %} <button type="button" data-id='{{product.id}}' class="btn btn-success update"><i class="fas fa-check"></i></button>
-    <button type="button" data-id='{{product.id}}' class="btn btn-danger delete" ><i class="fas fa-times"></i></button> {% endcomment %}
-        </div> 
+          <div v-for = '(product,index) in product_list' class="row">
+
+            <div class="col ">
+              <h4 class='index' style='font-size:20px; text-align:center'>[[index+1]]</h4></div>
+            <div  class="col ">
+              <h4 class='name' style='font-size:20px; text-align:center '>[[product.name]]</h4></div>
+            <div  class="col ">
+              <h4 class='code' style='font-size:20px; text-align:center'>[[product.code]]</h4></div>
+            <div  class="col unit_price">
+              <h4 class=unitprice style='font-size:20px; text-align:center'>[[product.unit_price]]</h4></div>
+            <div  class="col tax_percent">
+              <h4 class='taxpercent' style='font-size:20px; text-align:center'>[[product.tax_percent]]</h4></div>
+            <div  class="col">
+              <div class="form-check ">
+                <input class="form-check-input checky" style=margin-left:41% type="checkbox" v-on:click="checked(product.code)">
+              </div>
+            </div>
+            <hr>
+          </div>
+            
 
 
-        </div>
+
+
+          </div> 
+
+
+      </div>
 
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary " id='order_submit'>ok</button>
+        <button v-on:click="order_submit" type="button" class="btn btn-primary " id='order_submit'>ok</button>
       </div>
     </div>
   </div>
@@ -125,11 +146,81 @@
             <div style="text-align:center" class="col"><h5 style='font-size: 1.5em'><b> Delete</b></h5></div>
             <hr style='border-top: 4px solid black;'>
           </div>
-        <div class='output'>
+
+          
+        <div v-for = '(product,index) in product_list'  >
+          <div v-if='checked_list.includes(product.code)' class='row'> 
+          
+            <div class="col ">
+              <h4 class='name' style='font-size:20px; text-align:center '>[[product.name]]</h4></div>
+            <div  class="col ">
+              <h4 class='code' style='font-size:20px; text-align:center'>[[product.code]]</h4></div>
+            <div  class="col unit_price">
+              <h4 class=unitprice style='font-size:20px; text-align:center'>[[product.unit_price]]</h4></div>
+          <div  class="col">
+          <input v-on:input='all_calculations(product)' v-model='product.qty' type="number" class="form-control" ></div>
+          
+            <div  class="col tax_percent">
+              <h4 class='taxpercent' style='font-size:20px; text-align:center'>[[product.tax_percent]]</h4></div>
+            <div  class="col line_total">
+              <h4 class='line_total' style='font-size:20px; text-align:center'>[[line_total_calc(product.code)]]</h4></div>
+            <div class="col destry_the_selected_product " >
+              <button type="button" style="margin-left:40%; margin-bottom:10% " data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
+            </div>   
+            <hr>
+          </div>
+        
         </div>
 
-        <div class="total_calculations">
-        </div>
+        {% comment %} <div class="total_calculations">
+        </div> {% endcomment %}
+
+
+    <div class="row">
+      <div class='col align-self-end'>
+        <h4> Bill Discount:</h4>
+      </div>
+      <div class='col align-self-end'>
+      <input type="number" class="form-control bill_discount" value=0>
+      </div>
+    </div>
+
+    <div class='row'>
+    <div class='col align-self-end'>
+      <h4> Discount Total:</h4>
+    </div>
+    <div class='col align-self-end'>
+      <h4 class='discount_total'>0</h4>
+    </div>
+  </div>
+
+    <div class='row'>
+      <div class='col align-self-end'>
+        <h4> Gross Total:</h4>
+      </div>
+      <div class='col align-self-end'>
+        <h4 class='gross_total'>0</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class='col align-self-end'>
+        <h4 >Tax Total: </h4>
+      </div>
+      <div class='col align-self-end'>
+        <h4 class='tax_total'>0</h4>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class='col align-self-end'>
+        <h4>Grand Total</h4>
+      </div>
+
+      <div class='col align-self-end'>
+        <h4 class='grand_total'>0</h4>
+      </div>   
+    </div>
 
   </div>
 <div  style='margin-left:auto; 

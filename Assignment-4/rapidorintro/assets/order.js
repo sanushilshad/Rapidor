@@ -61,7 +61,7 @@ $('#order').on('click', function(){
               <h4 class='taxpercent' style='font-size:20px; text-align:center'>${value['tax_percent']}</h4></div>
             <div  class="col">
               <div class="form-check ">
-                <input class="form-check-input checky" style=margin-left:41% type="checkbox" >
+                <input class="form-check-input checky" style=margin-left:41% type="checkbox">
               </div>
           </div>
             <hr>
