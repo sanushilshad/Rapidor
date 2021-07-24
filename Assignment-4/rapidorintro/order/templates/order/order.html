@@ -106,7 +106,7 @@
               <h4 class='taxpercent' style='font-size:20px; text-align:center'>[[product.tax_percent]]</h4></div>
             <div  class="col">
               <div class="form-check ">
-                <input class="form-check-input checky" style=margin-left:41% type="checkbox" v-on:click="checked(product.code)">
+                <input class="form-check-input checky" style=margin-left:41% type="checkbox" v-model="product.checked">
               </div>
             </div>
             <hr>
@@ -125,7 +125,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button v-on:click="order_submit" type="button" class="btn btn-primary " id='order_submit'>ok</button>
+        <button v-on:click="add_product" type="button" data-bs-dismiss="modal" class="btn btn-primary " id='order_submit'>ok</button>
       </div>
     </div>
   </div>
@@ -148,8 +148,8 @@
           </div>
 
           
-        <div v-for = '(product,index) in product_list'  >
-          <div v-if='checked_list.includes(product.code)' class='row'> 
+        <div v-for = '(product,index) in order_lines' class="row"  >
+          
           
             <div class="col ">
               <h4 class='name' style='font-size:20px; text-align:center '>[[product.name]]</h4></div>
@@ -158,14 +158,14 @@
             <div  class="col unit_price">
               <h4 class=unitprice style='font-size:20px; text-align:center'>[[product.unit_price]]</h4></div>
           <div  class="col">
-          <input v-on:input='all_calculations(product)' v-model='product.qty' type="number" class="form-control" ></div>
+          <input v-on:input='all_calculations(product)' v-model='product.qty ' type="number" class="form-control" ></div>
           
             <div  class="col tax_percent">
               <h4 class='taxpercent' style='font-size:20px; text-align:center'>[[product.tax_percent]]</h4></div>
             <div  class="col line_total">
               <h4 class='line_total' style='font-size:20px; text-align:center'>[[line_total_calc(product.code)]]</h4></div>
             <div class="col destry_the_selected_product " >
-              <button type="button" style="margin-left:40%; margin-bottom:10% " data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
+              <button v-on:click="delete_product(product.code)" type="button" style="margin-left:40%; margin-bottom:10% " data-id= 'buttony' class="btn btn-danger delete" ><i class="fas fa-times"></i></button>
             </div>   
             <hr>
           </div>
@@ -181,7 +181,7 @@
         <h4> Bill Discount:</h4>
       </div>
       <div class='col align-self-end'>
-      <input type="number" class="form-control bill_discount" value=0>
+      <input v-model="bill_discount" type="number" class="form-control bill_discount" value=0>
       </div>
     </div>
 
