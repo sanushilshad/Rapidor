@@ -17,9 +17,7 @@ def create_customer(request):
     
 
     cust_1.save()
-    cc=cust_1.name
-    gg=cust_1.id
-    print ("blad",gg)
+
     response = {
         "message" :"You have successfully created new customer: " + cust_1.name, "id":cust_1.id
     }
