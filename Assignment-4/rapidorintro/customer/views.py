@@ -101,11 +101,12 @@ def delete(request):
     if (exist):
         customer = Customer.objects.get(id = id_1)
         customer.delete()
-        return JsonResponse('Successfully deleted', safe=False)
+        return JsonResponse({"message":'Successfully deleted','status':True}, safe=False)
     else:
         return JsonResponse({
-            "message": "Invalid Customer ID"
+            "message": "Invalid Customer ID","status": False
         })
+
 
 
 def mains(request):

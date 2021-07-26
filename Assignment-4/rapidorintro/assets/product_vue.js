@@ -4,7 +4,18 @@ var app = new Vue ({
     data: {
 
         a: 10,
-        product_list: []
+        product_list: [],
+        name1: null,
+        code: null,
+        unit_price: null,
+        tax_percent: null,
+        update_id: null,
+        name2: null,
+        code2: null,
+        unit_price2: null,
+        tax_percent2: null,
+        update_id: null
+
     },
     methods: {
         square(){
@@ -13,10 +24,10 @@ var app = new Vue ({
 
         fetch_product(){
             let url = '/product/fetch'
-            axios.post(url, {}).then(response =>{
+            axios.get(url, {}).then(response =>{
                 
                 this.product_list = response.data
-                console.log(this.product_list)
+                console.log("fetched",this.product_list)
             })
 
         },
@@ -39,10 +50,54 @@ var app = new Vue ({
                     }
 
                 }
+            }) 
+        },
 
-            }
-                )
+        fetch_product_again(product) {
+            console.log(product.id);
+            this.update_id = product.id
+            let url = '/product/fetch_single'
+            axios.post(url, { 'id': product.id }).then(response => {
+                this.name2 = response.data.name;
+                this.code2 = response.data.code;
+                this.unit_price2 = response.data.unit_price;
+                this.tax_percent2 = response.data.tax_percent;
+
+
+            
+            })
+        },
+
+        update_product() {
+            console.log(this.update_id)
+            axios.post('/product/update', {
+                id: this.update_id,
+                name: this.name2,
+                code: this.code2,
+                unit_price: this.unit_price2,
+                tax_percent: this.tax_percent2
+            }).then( (response)=> {
+                // console.log(response)
+                this.fetch_product()
+            });
+            
+        },
+
+        create() {
+            axios.post('/product/create', {
+            name:  this.name1,
+            code: this.code,
+            unit_price: this.unit_price,
+                tax_percent: this.tax_percent
+            })
+                .then( (response)=> {
+                    
+                    this.fetch_product()
+                    
+                });
+            
         }
+        
 
         
     },
