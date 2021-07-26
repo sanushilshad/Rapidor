@@ -74,7 +74,18 @@ var app = new Vue ({
   
             }).then( (response)=> {
                 console.log(response)
-                this.fetch_customer()
+                // this.fetch_customer()
+
+                this.customer_list.forEach((customer, index) => {
+                    if (customer['id'] == this.update_id) {
+                        customer['name'] = this.name2
+                        customer['username'] = this.user_name2
+                        customer['mobile'] = this.mobile2
+
+                    }
+
+
+                })
             });
             
         },
@@ -87,7 +98,22 @@ var app = new Vue ({
             })
                 .then( (response)=> {
                     
-                    this.fetch_customer()
+                    // this.fetch_customer()
+                   
+
+                    let customer = {
+                        'id' : response.data.id,
+                        'name' : this.name1,
+                        'username' : this.user_name,
+                        'mobile' : this.mobile,
+                    }
+                    console.log(customer)
+                    this.customer_list.push(customer)
+
+                   
+
+
+             
                     
                 });
             
