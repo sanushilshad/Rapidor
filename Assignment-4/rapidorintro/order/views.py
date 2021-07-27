@@ -82,6 +82,11 @@ def order(request):
                 bulk_entry = list((map(lambda line: map_to_orderline(line), lines)))
                 Order_line.objects.bulk_create(bulk_entry)
 
+                # Order_line.objects.bulk([list(map(
+                #     lambda line:
+                #     Order_line(product_name= line['name'], product_code=line['code'], 
+                #      unit_price=line['unit_price'],qty=line['qty'],tax_rate=line['tax_rate'],order=order1)),lines)])
+
                 # return JsonResponse({
                 #     "message": "Order has been created successfully with: "+order1.order_no,
                 #     "grand_total":order1.grand_total
